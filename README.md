@@ -51,7 +51,7 @@ Add the plugin to your babel config file for it to run only in the test environm
 ```js
 const path = require('path');
 
-/** @type {import('@babel/core').ConfigFunction} */
+/** @type {import('@babel/core').ConfigFunction} */
 module.exports = function (api) {
      // ...
      env: {
