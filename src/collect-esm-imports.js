@@ -25,18 +25,16 @@ const collectEsmImports = (file) => {
 
   const exports = {};
   sourceFile.forEachChild((child) => {
-    try {
-      if (ts.isImportDeclaration(child)) {
-        const importName = child.moduleSpecifier.text;
-        child.importClause.forEachChild((node) => {
+    if (ts.isImportDeclaration(child)) {
+      const importName = child.moduleSpecifier.text;
+      child.importClause.forEachChild((node) => {
+        if (node.elements) {
           node.elements.forEach((element) => {
             const importedModule = element.name.escapedText;
             exports[importedModule] = importName;
           });
-        });
-      }
-    } catch (error) {
-      console.log(error);
+        }
+      });
     }
   });
 

@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-bulletproof-features-import",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A babel plugin that resolves bulletproof features barrel files",
   "main": "index.js",
   "repository": "https://github.com/pafry7/babel-plugin-bulletproof-features-import",
