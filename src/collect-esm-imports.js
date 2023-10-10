@@ -15,7 +15,7 @@ const ts = require("typescript");
  *
  * ```
  */
-const collectEsmImports = (file) => {
+const collectEsmImports = (file, transformPath) => {
   const sourceFile = ts.createSourceFile(
     file,
     fs.readFileSync(file).toString(),
@@ -31,7 +31,9 @@ const collectEsmImports = (file) => {
         if (node.elements) {
           node.elements.forEach((element) => {
             const importedModule = element.name.escapedText;
-            exports[importedModule] = importName;
+            exports[importedModule] = transformPath
+              ? transformPath(importName)
+              : importName;
           });
         }
       });

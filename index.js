@@ -10,12 +10,20 @@ const cachedResolvers = {};
 const cachedModuleNames = {};
 let cachedFeatures = null;
 
-function getCachedImports({ logLevel, moduleName, barrelFilePath }) {
+function getCachedImports({
+  logLevel,
+  moduleName,
+  barrelFilePath,
+  transformPath,
+}) {
   if (cachedResolvers[moduleName]) {
     return cachedResolvers[moduleName];
   }
 
-  cachedResolvers[moduleName] = collectEsmImports(barrelFilePath);
+  cachedResolvers[moduleName] = collectEsmImports(
+    barrelFilePath,
+    transformPath
+  );
 
   logLevel >= INFO &&
     console.log(`[resolve-barrel-files] '${moduleName}' exports:`, imports);
@@ -79,10 +87,13 @@ module.exports = function () {
 
           const transforms = [];
 
+          const transformPath = state.opts?.transformPath;
+
           const imports = getCachedImports({
             logLevel,
             moduleName,
             barrelFilePath: featureIndexFilePath,
+            transformPath,
           });
 
           const [fullImports, memberImports] = partition(
